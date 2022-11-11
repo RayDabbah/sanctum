@@ -54,7 +54,8 @@ class Guard
     public function __invoke(Request $request)
     {
         foreach (Arr::wrap(config('sanctum.guard', 'web')) as $guard) {
-            if ($user = $this->auth->guard($guard)->user()) {
+            $user = $this->auth->guard($guard)->user();
+            if ($user && $this->hasValidProvider($user)) {
                 return $this->supportsTokens($user)
                     ? $user->withAccessToken(new TransientToken)
                     : $user;
