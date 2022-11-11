@@ -42,6 +42,9 @@ class GuardTest extends TestCase
 
     public function test_authentication_is_attempted_with_web_middleware()
     {
+
+        config(['auth.providers.users.model' => '\Laravel\Sanctum\Tests\User']);
+
         $factory = Mockery::mock(AuthFactory::class);
 
         $guard = new Guard($factory, null, 'users');
